@@ -13,8 +13,10 @@ const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
       backgroundColor: theme.palette.background.paper,
+      
     },
     term: {
+        paddingBottom: theme.spacing(2),
         backgroundColor: (term) => {
             if (term === "A1") {
                 return red[700];
@@ -61,12 +63,22 @@ const Home = () => {
         setTerms(newTerms)
     }
 
+    const handleAddCourse = (term, termIdx, course) => {
+
+        let newTerms = [...terms]
+        newTerms[termIdx].push(course);
+        setTerms(newTerms);
+        console.log(term)
+       
+        console.log(course)
+    }
+
     return (  
         <div className={classes.root}>           
             {terms.map((term, termIdx) => (
                 <Grid container spacing={2} className={classes.term}>
                     <Grid item xs={3}>
-                        <Summary term={term}/>
+                        <Summary term={term} termIdx={termIdx} handleAddCourse = {handleAddCourse}/>
                     </Grid> 
                     <Grid item xs={9}>
                         <Grid container  className={classes.term}>         
