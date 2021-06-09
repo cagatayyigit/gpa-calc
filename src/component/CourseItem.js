@@ -159,9 +159,9 @@ const CourseItem = ({courses, handleDelete, handleAddCourse}) => {
             <MenuItem value="">
                 <em>None</em>
             </MenuItem>
-            <MenuItem value={10}>A1</MenuItem>
-            <MenuItem value={20}>A2</MenuItem>
-            <MenuItem value={30}>A3</MenuItem>
+            <MenuItem value="A1">A1</MenuItem>
+            <MenuItem value="A2">A2</MenuItem>
+            <MenuItem value="A3">A3</MenuItem>
             </Select>
         </FormControl>
         </DialogContent>
