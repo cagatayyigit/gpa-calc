@@ -5,7 +5,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { grey, red, yellow } from '@material-ui/core/colors';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -13,7 +12,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -44,7 +42,7 @@ const toInt = (grade) => {
   if (grade === "B2") return 3.0;
 }
 
-export default function TermSummary({term, termIdx, handleAddCourse}) {
+export default function TermSummary({term, termIdx, handleAddCourse, handleRemoveTerm}) {
   const classes = useStyles();
   const [grade, setGrade] = useState("");
   const [credit, setCretit] = useState(0);
@@ -108,7 +106,7 @@ export default function TermSummary({term, termIdx, handleAddCourse}) {
       
       <CardActions>
                 <Button variant="outlined"  size="small" onClick={handleClickOpen}>Add Course</Button>
-                <Button variant="outlined"  size="small" >--------------------</Button>
+                <Button variant="outlined"  size="small" onClick={() => handleRemoveTerm(term)}>Remove Term</Button>
                 <Button variant="outlined"  size="small">--------------------</Button>
       </CardActions>
 

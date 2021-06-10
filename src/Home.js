@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container'
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TermSummary from '../src/component/TermSummary';
 import Summary from '../src/component/Summary';
-import { Divider } from '@material-ui/core';
 import CourseCard from "../src/component/CourseCard"
-import { grey, red, yellow } from '@material-ui/core/colors';
+import { grey, red } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -78,6 +76,12 @@ const Home = () => {
         newTerms.push([]);
         setTerms(newTerms);
     }
+    
+
+    const handleRemoveTerm = (term) => {
+        let newTerms = terms.filter(t => t !== term);
+        setTerms(newTerms);
+    }
 
     return (  
         <div className={classes.root}> 
@@ -87,14 +91,14 @@ const Home = () => {
             {terms.map((term, termIdx) => (
                 <Grid container spacing={2} className={classes.term}>
                     <Grid item xs={3}>
-                        <TermSummary term={term} termIdx={termIdx} handleAddCourse = {handleAddCourse}/>
+                        <TermSummary term={term} termIdx={termIdx} handleAddCourse = {handleAddCourse} handleRemoveTerm={handleRemoveTerm}/>
                     </Grid> 
                     <Grid item xs={9}>
                         <Grid container  className={classes.term}>         
                             <Grid container spacing={1} className={classes.term}>
                                 {term.map((course, courseIdx) => (
                                     <Grid item xs={6} md={3}>
-                                        <CourseCard termIdx={termIdx} courseIdx={courseIdx} course={course} handleDelete={handleDelete}/>
+                                        <CourseCard termIdx={termIdx} courseIdx={courseIdx} course={course} handleDelete={handleDelete} />
                                     </Grid> 
                                 ))}
                             </Grid>
