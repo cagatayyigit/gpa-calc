@@ -15,6 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
+import { GradingScaleService } from '../service/GradingScaleService';
 
 const useStyles = makeStyles({
 
@@ -34,20 +35,6 @@ const useStyles = makeStyles({
 },
 });
 
-const toInt = (grade) => {
-  if (grade === "A1") return 4.0;
-  if (grade === "A2") return 3.75;
-  if (grade === "A3") return 3.50;
-  if (grade === "B1") return 3.25;
-  if (grade === "B2") return 3.0;
-  if (grade === "B3") return 2.75;
-  if (grade === "C1") return 2.50;
-  if (grade === "C2") return 2.25;
-  if (grade === "C3") return 2.0;
-  if (grade === "D") return 1.75;
-  if (grade === "F2") return 0;
-  if (grade === "F3") return 0;
-}
 export default function TermSummary({term, termIdx, handleAddCourse, handleRemoveTerm}) {
   const classes = useStyles();
   const [grade, setGrade] = useState("");
@@ -89,8 +76,10 @@ export default function TermSummary({term, termIdx, handleAddCourse, handleRemov
   for (var i = 0; i < term.length; i++) {
     let currCredit = parseInt(term[i].credit)
     totalCredit += currCredit
-    termGpa += currCredit * toInt(term[i].grade)
+    termGpa += currCredit * GradingScaleService.gradeToScore(term[i].grade)
   }
+
+  let scales = GradingScaleService.getGradingScale();
 
 
   return (
@@ -179,12 +168,14 @@ export default function TermSummary({term, termIdx, handleAddCourse, handleRemov
             label = "Course Grade"
             onChange={(e) => {setGrade(e.target.value)}}
             >
+
             <MenuItem value="">
                 <em>None</em>
             </MenuItem>
-            <MenuItem value="A1">A1</MenuItem>
-            <MenuItem value="A2">A2</MenuItem>
-            <MenuItem value="A3">A3</MenuItem>
+            {scales.map((row) => (
+              <MenuItem value={row.grade}>{row.grade}</MenuItem>
+            ))}
+
             </Select>
         </FormControl>
         </DialogContent>

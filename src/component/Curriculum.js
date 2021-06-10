@@ -47,12 +47,10 @@ export default function Curriculum() {
 
   const isTaken = (course) => {
     let takenCourses = takenCoursesServices.getTakenCourses().taken_courses;
-    console.log(takenCourses)
     for (var j = 0; j < takenCourses.length; j++) {
         var term = takenCourses[j];
         for (var i = 0; i < term.length; i++) {
             if (term[i].code === course.code){
-              console.log(term[i].code, course.code)
                 return true;
             }
         }

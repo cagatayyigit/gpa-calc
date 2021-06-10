@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid';
 import TermSummary from '../src/component/TermSummary';
 import Summary from '../src/component/Summary';
 import CourseCard from "../src/component/CourseCard"
-import { grey, red } from '@material-ui/core/colors';
-import { Box, Paper, Typography } from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
+import { Box} from '@material-ui/core';
 import Curriculum from "../src/component/Curriculum";
 import {takenCoursesServices} from "../src/service/TakenCoursesService";
 

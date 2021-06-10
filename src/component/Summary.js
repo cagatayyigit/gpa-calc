@@ -5,8 +5,9 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { Box, Paper } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import  GradingScaleDialog  from "./GradingScaleDialog";
+import { GradingScaleService } from '../service/GradingScaleService';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -28,22 +29,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
-const toInt = (grade) => {
-  if (grade === "A1") return 4.0;
-  if (grade === "A2") return 3.75;
-  if (grade === "A3") return 3.50;
-  if (grade === "B1") return 3.25;
-  if (grade === "B2") return 3.0;
-  if (grade === "B3") return 2.75;
-  if (grade === "C1") return 2.50;
-  if (grade === "C2") return 2.25;
-  if (grade === "C3") return 2.0;
-  if (grade === "D") return 1.75;
-  if (grade === "F2") return 0;
-  if (grade === "F3") return 0;
-}
-
 export default function Summary({ terms, handleAddTerm }) {
   const classes = useStyles();
 
@@ -56,9 +41,8 @@ export default function Summary({ terms, handleAddTerm }) {
     for (var i = 0; i < term.length; i++) {
       let currCredit = parseInt(term[i].credit)
       totalCredit += currCredit
-      termGpa += currCredit * toInt(term[i].grade)
+      termGpa += currCredit * GradingScaleService.gradeToScore(term[i].grade);
     }
-    console.log(termGpa)
   }
 
 
