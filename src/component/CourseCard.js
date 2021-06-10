@@ -12,20 +12,41 @@ const useStyles = makeStyles({
   avatar: {
     backgroundColor: (course) => {
         if (course.grade === "A1") {
-            return red[700];
+            return "#57bb8a";
         }
         if (course.grade === "A2") {
-            return red[700];
+            return "#57bb8a";
         }
         if (course.grade === "A3") {
-            return red[700];
+            return "#57bb8a";
         } 
         if (course.grade === "B1") {
-            return red[700];
+            return "#9ace6a";
         }
         if (course.grade === "B2") {
-            return yellow[700];
+            return "#9ace6a";
         }
+        if (course.grade === "B3") {
+          return "#9ace6a";
+        }
+        if (course.grade === "C1") {
+          return "#ffcf02";
+        }
+        if (course.grade === "C2") {
+            return "#ffcf02";
+        }
+        if (course.grade === "C3") {
+          return "#ffcf02";
+        }
+        if (course.grade === "D") {
+          return "#ff9f02";
+      }
+      if (course.grade === "F2") {
+        return "#ff6f31";
+      }
+      if (course.grade === "F3") {
+        return "#ff6f31";
+      }
         else {
             return grey[700];
         }
@@ -48,7 +69,7 @@ export default function CourseCard({termIdx, courseIdx, course, handleDelete}) {
   const classes = useStyles(course);
   return (
     <div>
-        <Card>
+        <Card  variant={"outlined"} >
             <CardHeader
                 avatar ={
                     <Avatar className={classes.avatar}>

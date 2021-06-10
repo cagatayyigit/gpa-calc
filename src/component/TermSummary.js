@@ -40,8 +40,14 @@ const toInt = (grade) => {
   if (grade === "A3") return 3.50;
   if (grade === "B1") return 3.25;
   if (grade === "B2") return 3.0;
+  if (grade === "B3") return 2.75;
+  if (grade === "C1") return 2.50;
+  if (grade === "C2") return 2.25;
+  if (grade === "C3") return 2.0;
+  if (grade === "D") return 1.75;
+  if (grade === "F2") return 0;
+  if (grade === "F3") return 0;
 }
-
 export default function TermSummary({term, termIdx, handleAddCourse, handleRemoveTerm}) {
   const classes = useStyles();
   const [grade, setGrade] = useState("");
@@ -88,7 +94,7 @@ export default function TermSummary({term, termIdx, handleAddCourse, handleRemov
 
 
   return (
-    <Card className={classes.root}>
+    <Card  variant={"outlined"} className={classes.root}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" >
           Term GPA
