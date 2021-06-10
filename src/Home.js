@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container'
-import CourseItem from './component/CourseItem';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import TermSummary from '../src/component/TermSummary';
 import Summary from '../src/component/Summary';
 import { Divider } from '@material-ui/core';
 import CourseCard from "../src/component/CourseCard"
@@ -50,7 +50,6 @@ const Home = () => {
             {"code": "BBM103", "name": "Introduction to Machine", "grade": "B2", "credit": 3},
             {"code": "BBM406", "name": "Introductine Learning", "grade": "A2", "credit": 4},
         ],
- 
     ])
 
     const classes = useStyles(terms);
@@ -73,12 +72,22 @@ const Home = () => {
         console.log(course)
     }
 
+    const handleAddTerm = ( ) => {
+
+        let newTerms = [...terms]
+        newTerms.push([]);
+        setTerms(newTerms);
+    }
+
     return (  
-        <div className={classes.root}>           
+        <div className={classes.root}> 
+            <Container>
+                <Summary terms={terms} handleAddTerm={handleAddTerm}/>    
+            </Container>          
             {terms.map((term, termIdx) => (
                 <Grid container spacing={2} className={classes.term}>
                     <Grid item xs={3}>
-                        <Summary term={term} termIdx={termIdx} handleAddCourse = {handleAddCourse}/>
+                        <TermSummary term={term} termIdx={termIdx} handleAddCourse = {handleAddCourse}/>
                     </Grid> 
                     <Grid item xs={9}>
                         <Grid container  className={classes.term}>         
