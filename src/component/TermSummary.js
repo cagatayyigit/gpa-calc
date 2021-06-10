@@ -1,21 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
 import { GradingScaleService } from '../service/GradingScaleService';
+import AddCourseDialog from './AddCourseDialog';
 
 const useStyles = makeStyles({
 
@@ -37,28 +28,12 @@ const useStyles = makeStyles({
 
 export default function TermSummary({term, termIdx, handleAddCourse, handleRemoveTerm}) {
   const classes = useStyles();
-  const [grade, setGrade] = useState("");
-  const [credit, setCretit] = useState(0);
-  const [code, setCode] = useState("");
-  const [name, setName] = useState("");
 
-  const [valid, setValid] = useState(true);
+
 
   const [open, setOpen] = React.useState(false);
   
-  const addCourse = (term, termIdx, course) => {
-    if (valid) {
-      handleAddCourse(term,termIdx,course )
-      handleClose()
-      setGrade("")
-      setCode("")
-      setName("")
-      setCretit("")
-    }else {
-      // alert 
-    }
-    
-  };
+ 
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -67,9 +42,6 @@ export default function TermSummary({term, termIdx, handleAddCourse, handleRemov
   const handleClose = () => {
     setOpen(false);
   };
-  const inputProps = {
-      step: 0.5,
-    };
 
   let totalCredit = 0;
   let termGpa = 0;
@@ -78,9 +50,6 @@ export default function TermSummary({term, termIdx, handleAddCourse, handleRemov
     totalCredit += currCredit
     termGpa += currCredit * GradingScaleService.gradeToScore(term[i].grade)
   }
-
-  let scales = GradingScaleService.getGradingScale();
-
 
   return (
     <Card  variant={"outlined"} className={classes.root}>
@@ -100,105 +69,12 @@ export default function TermSummary({term, termIdx, handleAddCourse, handleRemov
       </CardContent>
       
       <CardActions>
-                <Button variant="outlined"  size="small" onClick={handleClickOpen}>Add Course</Button>
+                <Button variant="contained"  size="small" color="primary" onClick={handleClickOpen}>Add Course</Button>
                 <Button variant="outlined"  size="small" onClick={() => handleRemoveTerm(term)}>Remove Term</Button>
-                <Button variant="outlined"  size="small">--------------------</Button>
       </CardActions>
 
-      <div>
-
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">New Course</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            To add a new course, please the details here.
-          </DialogContentText>
-          <TextField
-            variant="outlined"
-            autoFocus
-            error ={!valid}
-            required
-            margin="dense"
-            id="name"
-            value={code}
-            label="Course Code"
-            onChange={(e) => {
-              let flag = true;
-              term.forEach((t, idx) => {
-                if (t.code === e.target.value) {
-                  flag = false;
-                } 
-              })
-             setValid(flag);
-              setCode(e.target.value)
-            }}
-            fullWidth
-          />
-        <TextField
-            autoFocus
-            variant="outlined"
-            margin="dense"
-            required
-            id="name"
-            value={name}
-            label="Course Name"
-            onChange={(e) => {setName(e.target.value)}}
-            fullWidth
-        />
-        <TextField
-            autoFocus
-            required
-            variant="outlined"
-            margin="dense"
-            id="name"
-            label="Course Credit"
-            value={credit}
-            type="number"
-            step = {0.1}
-            onChange={(e) => {setCretit(e.target.value)}}
-            inputProps={inputProps}
-            fullWidth
-        />
-        <FormControl variant="outlined" className={classes.formControl}>
-            <InputLabel id="demo-simple-select-helper-label">Course Grade</InputLabel>
-            <Select
-            labelId="demo-simple-select-helper-label"
-            id="demo-simple-select-helper"
-            value={grade}
-            label = "Course Grade"
-            onChange={(e) => {setGrade(e.target.value)}}
-            >
-
-            <MenuItem value="">
-                <em>None</em>
-            </MenuItem>
-            {scales.map((row) => (
-              <MenuItem value={row.grade}>{row.grade}</MenuItem>
-            ))}
-
-            </Select>
-        </FormControl>
-        </DialogContent>
-
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={
-            
-            () => {
-             addCourse(term, termIdx, {
-              "code": code, 
-              "name": name, 
-              "grade": grade, 
-              "credit": credit
-              })
-            }} color="primary">
-            Add
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+      <AddCourseDialog initialCode={""} initialName={""} initialCredit={0} term={term} termIdx={termIdx} open={open} handleClose={handleClose} handleAddCourse={handleAddCourse}/>
+    
     </Card>
   );
 }

@@ -101,7 +101,7 @@ const Home = () => {
                 </Grid>
 
                 <Grid item xs={3} > 
-                        <Curriculum /> 
+                        <Curriculum handleAddCourse={handleAddCourse} handleAddTerm={handleAddTerm}/> 
                 </Grid>
 
             </Grid>

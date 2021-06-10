@@ -10,6 +10,7 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { CurriculumService } from '../service/CurriculumService';
 import EditCurriculumDialog from './EditCurriculumDialog';
 import { takenCoursesServices } from '../service/TakenCoursesService';
+import AddCourseDialog from './AddCourseDialog';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function Curriculum() {
+export default function Curriculum({handleAddCourse, handleAddTerm}) {
   const classes = useStyles();
 
   const [editCurriculumDialogOpen, setEditCurriculumDialogOpen] = useState(false);
@@ -58,6 +59,25 @@ export default function Curriculum() {
     return false;
   }
 
+  
+  const [openAddCourse, setOpenAddCourse] = React.useState(false);
+
+  const handleAddCourseClickOpen = () => {
+    setOpenAddCourse(true);
+  };
+
+  const handleAddCourseClose = () => {
+    setOpenAddCourse(false);
+  };
+
+
+const [selectedCourse, setSelectedCourse] = useState([]);
+const [selectedTerm, setSelectedTerm] = useState([]);
+const [selectedTermIdx, setSelectedTermIdx] = useState(0);
+
+
+const [takenCourses, setTakenCourses] = useState(takenCoursesServices.getTakenCourses().taken_courses)
+
   return (
     <Card variant={"outlined"} >
       <CardHeader  
@@ -72,9 +92,17 @@ export default function Curriculum() {
         {terms.map((term, idx) => (
           <li key={`section-${idx}`} className={classes.listSection}>
             <ul className={classes.ul}>
-              <ListSubheader>{`Term  ${idx}`}</ListSubheader>
+              <ListSubheader>{`Term  ${idx + 1}`}</ListSubheader>
               {term.map((course) => (
-                <ListItem disabled={isTaken(course)} dense  key={`item-${idx}-${course}`}>
+                <ListItem button onClick={(e) => {
+                  if(idx >= takenCoursesServices.getTakenCourses().taken_courses.length) {
+                    handleAddTerm();
+                  }
+                  setSelectedCourse(course);
+                  setSelectedTerm(takenCourses[idx]);
+                  setSelectedTermIdx(idx);
+                  handleAddCourseClickOpen();
+                }} disabled={isTaken(course)} dense  key={`item-${idx}-${course}`}>
                   <ListItemText primary={`${course.code} - ${course.name} - ${course.credit}`} />
                 </ListItem>
               ))}
@@ -83,6 +111,7 @@ export default function Curriculum() {
         ))}
       </List>
       <EditCurriculumDialog open={editCurriculumDialogOpen} handleClose={handleCloseEditCurriculumDialog} />
+      <AddCourseDialog initialCode={selectedCourse.code} initialName={selectedCourse.name} initialCredit={selectedCourse.credit} term={selectedTerm} termIdx={selectedTermIdx} open={openAddCourse} handleClose={handleAddCourseClose} handleAddCourse={handleAddCourse}/>
     </Card>
   );
 }
