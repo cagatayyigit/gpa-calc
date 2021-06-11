@@ -5,17 +5,13 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { Box } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 import  GradingScaleDialog  from "./GradingScaleDialog";
 import { GradingScaleService } from '../service/GradingScaleService';
+import { PieChart } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
 
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
   title: {
     fontSize: 14,
   },
@@ -31,6 +27,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Summary({ terms, handleAddTerm }) {
   const classes = useStyles();
+
+
 
   const [gradingScaleDialogOpen, setGradingScaleDialogOpen] = useState(false);
 
@@ -56,7 +54,7 @@ export default function Summary({ terms, handleAddTerm }) {
 
   return (
     <Box>
-
+      
       <Card variant={"outlined"} className={classes.root}>
         <CardContent>
           <Typography className={classes.title} color="textSecondary" >
@@ -68,18 +66,17 @@ export default function Summary({ terms, handleAddTerm }) {
           <Typography className={classes.pos} color="textSecondary">
             {"Total Credit: " + totalCredit}
           </Typography>
-
+          
         </CardContent>
 
         <CardActions>
           <Button variant="contained" size="small" color="primary" onClick={handleAddTerm}>ADD TERM</Button>
           <Button variant="outlined" size="small" onClick={handleOpenGradingScaleDialog}>SET GRADING SCALE</Button>
         </CardActions>
-
-
       </Card>
 
       <GradingScaleDialog open={gradingScaleDialogOpen} handleClose={handleCloseGradingScaleDialog} />
     </Box>
+   
   );
 }

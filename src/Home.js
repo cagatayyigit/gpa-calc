@@ -8,18 +8,13 @@ import { grey } from '@material-ui/core/colors';
 import { Box} from '@material-ui/core';
 import Curriculum from "../src/component/Curriculum";
 import { TakenCoursesService } from "../src/service/TakenCoursesService";
+import { PieChart } from '@material-ui/icons';
+import '@devexpress/dx-react-chart-bootstrap4/dist/dx-react-chart-bootstrap4.css';
+import ReactDOM from 'react-dom'
 
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: theme.spacing(2),
-    },
-    term: {
-    },
-
-    paper: {
-        padding: theme.spacing(2),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
     },
     curriculum: {
         backgroundColor: grey[300],
@@ -31,15 +26,20 @@ const useStyles = makeStyles((theme) => ({
     summaryContainer: {
         marginBottom: theme.spacing(2),
     },
-    divider: {
-        marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(1),
-    },
+    pieChart: {
+        alignContent: "center",
+        alignItems: "center",
+        verticalAlign: "center",
+        minHeight: 400,
+        minWidth: 400,
+        backgroundColor: grey[500],
+    }
 }));
 
 
 const Home = () => {
 
+    
     const [terms, setTerms] = useState(TakenCoursesService.getTakenCourses())
     TakenCoursesService.saveTakenCourses(terms);
 
@@ -80,11 +80,14 @@ const Home = () => {
     return (
         <div className={classes.root}>
             <Grid container spacing={2}>
+                
                 <Grid item xs={9}>
+                    
                     <Box className={classes.summaryContainer}>
                         <Summary terms={terms} handleAddTerm={handleAddTerm} />
                     </Box>
                     {terms.map((term, termIdx) => (
+
                         <Box>
                             <Grid container spacing={2} className={classes.term}>
                                 <Grid item xs={3}>
@@ -108,6 +111,7 @@ const Home = () => {
                 </Grid>
                 
                 <Grid item xs={3} >
+
                     <Curriculum handleAddCourse={handleAddCourse} handleAddTerm={handleAddTerm} />
                 </Grid>
 

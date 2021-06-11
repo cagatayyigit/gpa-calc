@@ -90,6 +90,7 @@ const resetCurriculum = () => {
 const getCurriculum = () => {
     const curriculum = localStorage.getItem("curriculum");
     if (curriculum === null || curriculum === "") {
+        saveCurriculum(defaultCurriculum);
         return defaultCurriculum;
     }
     return JSON.parse(curriculum);

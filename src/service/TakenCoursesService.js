@@ -9,15 +9,13 @@ const getTakenCourses = () => {
     if (taken_courses === null || taken_courses === "") {
         return [
             [
-                { "code": "BBM105", "name": "Introduction to Computer Engineering", "grade": "A1", "credit": 2 },
+                { "code": "FİZ137", "name": "Physics  I", "grade": "A1", "credit": 5 },
                 { "code": "İNG111", "name": "Language Skills I", "grade": "F2", "credit": 3 },
-                { "code": "TKD103", "name": "Turkish I", "grade": "D", "credit": 2 },
-                { "code": "TKD103", "name": "Turkish I", "grade": "C1", "credit": 2 },
             ],
             [
-                { "code": "MAT124", "name": "Mathematics II", "grade": "C1", "credit": 6 },
-                { "code": "FİZ138", "name": "Physics II", "grade": "B1", "credit": 5 },
-                { "code": "FİZ117", "name": "General Physics Lab.", "grade": "A1", "credit": 2 },
+                { "code": "MAT124", "name": "Mathematics II", "grade": "B2", "credit": 6 },
+                { "code": "FİZ138", "name": "Physics II", "grade": "C1", "credit": 5 },
+                { "code": "FİZ117", "name": "General Physics Lab.", "grade": "D", "credit": 2 },
             ],
         ]
     }

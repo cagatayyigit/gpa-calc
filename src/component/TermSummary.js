@@ -28,13 +28,8 @@ const useStyles = makeStyles({
 
 export default function TermSummary({term, termIdx, handleAddCourse, handleRemoveTerm}) {
   const classes = useStyles();
-
-
-
   const [open, setOpen] = React.useState(false);
   
- 
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -62,9 +57,6 @@ export default function TermSummary({term, termIdx, handleAddCourse, handleRemov
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
           {"Total Credit: " +totalCredit}
-        </Typography>
-        <Typography variant="body2" component="p">
-          you have to work hard.
         </Typography>
       </CardContent>
       
