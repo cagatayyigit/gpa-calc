@@ -55,7 +55,7 @@ export default function TermSummary({term, termIdx, handleAddCourse, handleRemov
     <Card  variant={"outlined"} className={classes.root}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" >
-          Term GPA
+          Term - {termIdx + 1} GPA
         </Typography>
         <Typography variant="h5" component="h2">
           {(termGpa / totalCredit).toPrecision(3)}

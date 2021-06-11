@@ -66,7 +66,7 @@ export default function EditCurriculumDialog({ open, handleClose }) {
     }
 
     const handleAddCourse = (tidx) => {
-        copyCurriculum[tidx].push([])
+        copyCurriculum[tidx].push({ "code": "", "name": "", "grade": "C1", "credit": 0 },)
         setCurriculum(copyCurriculum);
     }
 

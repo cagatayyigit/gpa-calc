@@ -12,6 +12,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
+import { TakenCoursesService } from '../service/TakenCoursesService';
+import { Tooltip } from '@material-ui/core';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,8 +45,15 @@ export default function AddCourseDialog({ term, termIdx, open, handleAddCourse, 
     const [valid, setValid] = useState(true);
     const inputProps = {step: 0.5};
 
+    const [termSize, setTermSize] = useState(TakenCoursesService.getTakenCourses().length);
+
+    React.useEffect(() => {
+        let s = TakenCoursesService.getTakenCourses().length;
+        setTermSize(s);
+    }, [open])
+
    React.useEffect(() => {
-       console.log(initialCode)
+     
     setCode(initialCode)
     setName(initialName);
     setCretit(initialCredit);
@@ -68,7 +77,7 @@ export default function AddCourseDialog({ term, termIdx, open, handleAddCourse, 
             <DialogTitle id="form-dialog-title">New Course</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    To add a new course, please fill the details here.
+                    To add a new course to term {termIdx + 1}, please fill the details here.
                 </DialogContentText>
 
                 <TextField
@@ -139,17 +148,23 @@ export default function AddCourseDialog({ term, termIdx, open, handleAddCourse, 
             <Button onClick={handleClose} color="primary">
                 Cancel
             </Button>
-            <Button onClick={
-                () => {
-                addCourse(term, termIdx, {
-                    "code": code, 
-                    "name": name, 
-                    "grade": grade, 
-                    "credit": credit
-                })
-                }} color="primary">
-                Add
-            </Button>
+
+            <Tooltip title={termSize <= termIdx ? "You have only " + termSize +" term. Create " + (termIdx - termSize + 1) + " more term!" : null}>
+                <span>
+                <Button disabled={termSize <= termIdx}
+                onClick={
+                    () => {
+                    addCourse(term, termIdx, {
+                        "code": code, 
+                        "name": name, 
+                        "grade": grade, 
+                        "credit": credit
+                    })
+                    }} color="primary">
+                    Add
+                </Button>
+                </span>
+            </Tooltip>
         </DialogActions>
       </Dialog>
     );

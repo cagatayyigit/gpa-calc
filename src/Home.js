@@ -66,12 +66,15 @@ const Home = () => {
         let newTerms = [...terms]
         newTerms.push([]);
         setTerms(newTerms);
+        TakenCoursesService.saveTakenCourses(newTerms);
     }
 
 
     const handleRemoveTerm = (term) => {
         let newTerms = terms.filter(t => t !== term);
         setTerms(newTerms);
+        TakenCoursesService.saveTakenCourses(newTerms);
+
     }
 
     return (

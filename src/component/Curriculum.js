@@ -102,9 +102,6 @@ const takenCourses = TakenCoursesService.getTakenCourses()
               <ListSubheader>{`Term  ${idx + 1}`}</ListSubheader>
               {term.map((course) => (
                 <ListItem button onClick={(e) => {
-                  if(idx >= TakenCoursesService.getTakenCourses().length) {
-                    handleAddTerm();
-                  }
                   setSelectedCourse(course);
                   setSelectedTerm(takenCourses[idx]);
                   setSelectedTermIdx(idx);

@@ -41,4 +41,11 @@ const addCourse = (term, termIdx, course) => {
     saveTakenCourses(newTakenCourses);
 }
 
-export const TakenCoursesService = { saveTakenCourses, getTakenCourses, removeCourse, addCourse };
+const addTerm = () => {
+    const taken_courses = getTakenCourses();
+    let newTakenCourses = [...taken_courses]
+    newTakenCourses.push([]);
+    saveTakenCourses(newTakenCourses);
+}
+
+export const TakenCoursesService = { saveTakenCourses, getTakenCourses, removeCourse, addCourse, addTerm };
