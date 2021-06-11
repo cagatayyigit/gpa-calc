@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/gpa-calc/static/css/main.9d5b29c0.chunk.css",
+    "main.js": "/gpa-calc/static/js/main.4b0cab8d.chunk.js",
+    "main.js.map": "/gpa-calc/static/js/main.4b0cab8d.chunk.js.map",
+    "runtime-main.js": "/gpa-calc/static/js/runtime-main.87dbf7a9.js",
+    "runtime-main.js.map": "/gpa-calc/static/js/runtime-main.87dbf7a9.js.map",
+    "static/css/2.f3fe6eb5.chunk.css": "/gpa-calc/static/css/2.f3fe6eb5.chunk.css",
+    "static/js/2.8bae7093.chunk.js": "/gpa-calc/static/js/2.8bae7093.chunk.js",
+    "static/js/2.8bae7093.chunk.js.map": "/gpa-calc/static/js/2.8bae7093.chunk.js.map",
+    "index.html": "/gpa-calc/index.html",
+    "static/css/2.f3fe6eb5.chunk.css.map": "/gpa-calc/static/css/2.f3fe6eb5.chunk.css.map",
+    "static/css/main.9d5b29c0.chunk.css.map": "/gpa-calc/static/css/main.9d5b29c0.chunk.css.map",
+    "static/js/2.8bae7093.chunk.js.LICENSE.txt": "/gpa-calc/static/js/2.8bae7093.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.87dbf7a9.js",
+    "static/css/2.f3fe6eb5.chunk.css",
+    "static/js/2.8bae7093.chunk.js",
+    "static/css/main.9d5b29c0.chunk.css",
+    "static/js/main.4b0cab8d.chunk.js"
+  ]
+}
