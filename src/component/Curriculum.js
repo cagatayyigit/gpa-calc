@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     position: 'relative',
     overflow: 'auto',
+    
   },
   listSection: {
     backgroundColor: 'inherit',
@@ -39,12 +40,18 @@ export default function Curriculum({handleAddCourse, handleAddTerm}) {
     setEditCurriculumDialogOpen(true);
   }
 
+  const [terms, setTerms] = useState(CurriculumService.getCurriculum());
+
+
   const handleCloseEditCurriculumDialog = () => {
     setEditCurriculumDialogOpen(false);
+    let c = CurriculumService.getCurriculum();
+    setTerms(c);
+    CurriculumService.saveCurriculum(c);
     // update terms
   }
 
-  const terms = CurriculumService.getCurriculum();
+  
   
   const isTaken = (course) => {
     let takenCourses = TakenCoursesService.getTakenCourses();

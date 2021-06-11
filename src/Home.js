@@ -63,7 +63,6 @@ const Home = () => {
     }
 
     const handleAddTerm = () => {
-
         let newTerms = [...terms]
         newTerms.push([]);
         setTerms(newTerms);

@@ -7,9 +7,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Typography } from '@material-ui/core';
+import { Box, IconButton, Typography } from '@material-ui/core';
 import { CurriculumService } from '../service/CurriculumService';
-
+import { DeleteOutlined } from '@material-ui/icons';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -41,40 +41,37 @@ export default function EditCurriculumDialog({ open, handleClose }) {
     const classes = useStyles();
 
     const [curriculum, setCurriculum] = useState(CurriculumService.getCurriculum());
+    let copyCurriculum = [...curriculum];
 
     const inputProps = {step: 0.5};
 
     const handleCourseCodeChange = (tidx, cidx, event) => {
-        //let copyCurriculum = [...curriculum];
-        //copyCurriculum[tidx][cidx].code = event.value;
-        //console.log(event.value)
-        //setCurriculum(copyCurriculum);
+        copyCurriculum[tidx][cidx].code = event.target.value;
+        setCurriculum(copyCurriculum);
     }
 
     const handleCourseNameChange = (tidx, cidx, event) => {
-       
-        //let copyCurriculum = [...curriculum];
-        //copyCurriculum[tidx][cidx].name = event.value;
-        //console.log(event.value)
-        //setCurriculum(copyCurriculum);
+        copyCurriculum[tidx][cidx].name = event.target.value;
+        setCurriculum(copyCurriculum);
     }
 
     const handleCourseCreditChange = (tidx, cidx, event) => {
-        //let copyCurriculum = [...curriculum];
-        //copyCurriculum[tidx][cidx].credit = event.value;
-        //console.log(event.value)
-        //setCurriculum(copyCurriculum);
+        copyCurriculum[tidx][cidx].credit = event.target.value;
+        setCurriculum(copyCurriculum);
     }
 
     const handleAddTerm = () => {
-        let copyCurriculum = [...curriculum];
         copyCurriculum.push([]);
         setCurriculum(copyCurriculum);
     }
 
     const handleAddCourse = (tidx) => {
-        let copyCurriculum = [...curriculum];
         copyCurriculum[tidx].push([])
+        setCurriculum(copyCurriculum);
+    }
+
+    const handleDeleteCourse = (tidx, cidx) => {
+        copyCurriculum[tidx].splice(cidx, 1);
         setCurriculum(copyCurriculum);
     }
 
@@ -85,7 +82,7 @@ export default function EditCurriculumDialog({ open, handleClose }) {
 
     return (
         <div>
-            <Dialog className={classes.root} open={open} onClose={handleClose}  fullWidth={true} maxWidth={"md"}>
+            <Dialog className={classes.root} open={open} onClose={handleClose}  fullWidth={true} maxWidth={"md"} disableBackdropClick>
                 <DialogTitle>Edit Curriculum</DialogTitle>
                 <DialogContent >
                     <DialogContentText>
@@ -130,6 +127,11 @@ export default function EditCurriculumDialog({ open, handleClose }) {
                                             onChange={(event) => handleCourseCreditChange(tidx, cidx, event)}
                                             inputMode="number"
                                             size="small" />
+                                        
+                                        <IconButton onClick={() => handleDeleteCourse(tidx, cidx)}>
+                                            <DeleteOutlined />
+                                        </IconButton>
+
                                     </Box>
                                 );
                             })}
@@ -141,9 +143,19 @@ export default function EditCurriculumDialog({ open, handleClose }) {
                 </DialogContent>
 
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">
+                <Button onClick={() => {
+                    CurriculumService.resetCurriculum();
+                    setCurriculum(CurriculumService.getCurriculum());
+                    handleClose();
+                }} color="primary">
+                        RESET TO DEFAULT
+                    </Button>
+                    <Button onClick={() => {
+                        handleClose();
+                        setCurriculum(CurriculumService.getCurriculum());
+                        }} color="primary">
                         CANCEL
-                </Button>
+                    </Button>
                     <Button color="primary" onClick={handleAddTerm}>
                         ADD TERM
                 </Button>
