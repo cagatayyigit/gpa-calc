@@ -9,7 +9,7 @@ import { CardHeader, IconButton } from '@material-ui/core';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { CurriculumService } from '../service/CurriculumService';
 import EditCurriculumDialog from './EditCurriculumDialog';
-import { takenCoursesServices } from '../service/TakenCoursesService';
+import { TakenCoursesService } from '../service/TakenCoursesService';
 import AddCourseDialog from './AddCourseDialog';
 
 
@@ -41,13 +41,13 @@ export default function Curriculum({handleAddCourse, handleAddTerm}) {
 
   const handleCloseEditCurriculumDialog = () => {
     setEditCurriculumDialogOpen(false);
+    // update terms
   }
 
-  const [terms, setTerms] = useState(CurriculumService.getCurriculum().curriculum);
-  CurriculumService.saveCurriculum({"curriculum": terms});
-
+  const terms = CurriculumService.getCurriculum();
+  
   const isTaken = (course) => {
-    let takenCourses = takenCoursesServices.getTakenCourses().taken_courses;
+    let takenCourses = TakenCoursesService.getTakenCourses();
     for (var j = 0; j < takenCourses.length; j++) {
         var term = takenCourses[j];
         for (var i = 0; i < term.length; i++) {
@@ -76,7 +76,7 @@ const [selectedTerm, setSelectedTerm] = useState([]);
 const [selectedTermIdx, setSelectedTermIdx] = useState(0);
 
 
-const [takenCourses, setTakenCourses] = useState(takenCoursesServices.getTakenCourses().taken_courses)
+const takenCourses = TakenCoursesService.getTakenCourses()
 
   return (
     <Card variant={"outlined"} >
@@ -95,15 +95,15 @@ const [takenCourses, setTakenCourses] = useState(takenCoursesServices.getTakenCo
               <ListSubheader>{`Term  ${idx + 1}`}</ListSubheader>
               {term.map((course) => (
                 <ListItem button onClick={(e) => {
-                  if(idx >= takenCoursesServices.getTakenCourses().taken_courses.length) {
+                  if(idx >= TakenCoursesService.getTakenCourses().length) {
                     handleAddTerm();
                   }
                   setSelectedCourse(course);
                   setSelectedTerm(takenCourses[idx]);
                   setSelectedTermIdx(idx);
-                  handleAddCourseClickOpen();
+                  handleAddCourseClickOpen(); 
                 }} disabled={isTaken(course)} dense  key={`item-${idx}-${course}`}>
-                  <ListItemText primary={`${course.code} - ${course.name} - ${course.credit}`} />
+                  <ListItemText primary={`${course.code} - ${course.name} (${course.credit})`} />
                 </ListItem>
               ))}
             </ul>

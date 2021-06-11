@@ -7,7 +7,7 @@ import CourseCard from "../src/component/CourseCard"
 import { grey } from '@material-ui/core/colors';
 import { Box} from '@material-ui/core';
 import Curriculum from "../src/component/Curriculum";
-import {takenCoursesServices} from "../src/service/TakenCoursesService";
+import { TakenCoursesService } from "../src/service/TakenCoursesService";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,17 +28,20 @@ const useStyles = makeStyles((theme) => ({
     curriculumGrid: {
         backgroundColor: grey[300],
     },
-
     summaryContainer: {
         marginBottom: theme.spacing(2),
-    }
+    },
+    divider: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+    },
 }));
 
 
 const Home = () => {
 
-    const [terms, setTerms] = useState(takenCoursesServices.getTakenCourses().taken_courses)
-    takenCoursesServices.saveTakenCourses({"taken_courses": terms});
+    const [terms, setTerms] = useState(TakenCoursesService.getTakenCourses())
+    TakenCoursesService.saveTakenCourses(terms);
 
     const classes = useStyles(terms);
 
@@ -48,7 +51,7 @@ const Home = () => {
             newTerms[idx] = newTerms[idx].filter(c => c !== course)
         })
         setTerms(newTerms)
-        takenCoursesServices.removeCourse(course);
+        TakenCoursesService.removeCourse(course);
     }
 
     const handleAddCourse = (term, termIdx, course) => {
@@ -56,7 +59,7 @@ const Home = () => {
         let newTerms = [...terms]
         newTerms[termIdx].push(course);
         setTerms(newTerms);
-        takenCoursesServices.addCourse(term, termIdx, course);
+        TakenCoursesService.addCourse(term, termIdx, course);
     }
 
     const handleAddTerm = () => {
@@ -80,28 +83,30 @@ const Home = () => {
                         <Summary terms={terms} handleAddTerm={handleAddTerm} />
                     </Box>
                     {terms.map((term, termIdx) => (
-                        <Grid container spacing={2} className={classes.term}>
-                            <Grid item xs={3}>
-                                <TermSummary term={term} termIdx={termIdx} handleAddCourse={handleAddCourse} handleRemoveTerm={handleRemoveTerm} />
-                            </Grid>
-                            <Grid item xs={9}>
-                                <Grid container className={classes.term}>
-                                    <Grid container spacing={1} className={classes.term}>
-                                        {term.map((course, courseIdx) => (
-                                            <Grid item xs={6} md={3}>
-                                                <CourseCard termIdx={termIdx} courseIdx={courseIdx} course={course} handleDelete={handleDelete} />
-                                            </Grid>
-                                        ))}
+                        <Box>
+                            <Grid container spacing={2} className={classes.term}>
+                                <Grid item xs={3}>
+                                    <TermSummary term={term} termIdx={termIdx} handleAddCourse={handleAddCourse} handleRemoveTerm={handleRemoveTerm} />
+
+                                </Grid>
+                                <Grid item xs={9}>
+                                    <Grid container className={classes.term}>
+                                        <Grid container spacing={1} className={classes.term}>
+                                            {term.map((course, courseIdx) => (
+                                                <Grid item xs={6} md={3}>
+                                                    <CourseCard termIdx={termIdx} courseIdx={courseIdx} course={course} handleDelete={handleDelete} />
+                                                </Grid>
+                                            ))}
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                             </Grid>
-                        </Grid>
-
+                        </Box>
                     ))}
                 </Grid>
-
-                <Grid item xs={3} > 
-                        <Curriculum handleAddCourse={handleAddCourse} handleAddTerm={handleAddTerm}/> 
+                
+                <Grid item xs={3} >
+                    <Curriculum handleAddCourse={handleAddCourse} handleAddTerm={handleAddTerm} />
                 </Grid>
 
             </Grid>

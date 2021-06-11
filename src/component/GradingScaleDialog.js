@@ -10,8 +10,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { GradingScaleService } from '../service/GradingScaleService';
 import { Box } from '@material-ui/core';
 
-
-
 const useStyles = makeStyles((theme) => ({
     root: {
 
@@ -45,14 +43,12 @@ export default function GradingScaleDialog({ open, handleClose }) {
     }
 
     const handleScoreChange = (key, event) => {
-
         for (const i in scale) {
             if (scale[i].grade === key) {
                 scale[i].score = event.target.value;
                 break;
             }
         }
-
         setScale(JSON.parse(JSON.stringify(scale)));
     }
 
@@ -84,6 +80,7 @@ export default function GradingScaleDialog({ open, handleClose }) {
                                 onChange={(event) => handleScoreChange(k, event)}
                                 inputMode="number"
                                 size="small" />
+
                         </Box>
                     );
                 })}

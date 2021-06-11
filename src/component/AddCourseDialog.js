@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box } from '@material-ui/core';
-import { CurriculumService } from '../service/CurriculumService';
 import { GradingScaleService } from '../service/GradingScaleService';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -50,7 +48,7 @@ export default function AddCourseDialog({ term, termIdx, open, handleAddCourse, 
     setCode(initialCode)
     setName(initialName);
     setCretit(initialCredit);
-   }, [initialCode])
+   }, [initialCode, initialCredit, initialName])
 
     const addCourse = (term, termIdx, course) => {
         if (valid) {
@@ -70,7 +68,7 @@ export default function AddCourseDialog({ term, termIdx, open, handleAddCourse, 
             <DialogTitle id="form-dialog-title">New Course</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    To add a new course, please the details here.
+                    To add a new course, please fill the details here.
                 </DialogContentText>
 
                 <TextField
@@ -86,7 +84,7 @@ export default function AddCourseDialog({ term, termIdx, open, handleAddCourse, 
                     let flag = true;
                     term.forEach((t, idx) => {
                         if (t.code === e.target.value) {
-                        flag = false;
+                        flag = false; 
                         } 
                     })
                     setValid(flag);

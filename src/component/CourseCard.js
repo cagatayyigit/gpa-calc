@@ -1,90 +1,69 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import {DeleteOutlined} from "@material-ui/icons";
+import { DeleteOutlined } from "@material-ui/icons";
 import { Avatar, CardHeader, IconButton } from '@material-ui/core';
-import { grey} from '@material-ui/core/colors';
+import { Box } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import { GradingScaleService } from '../service/GradingScaleService';
 
-const useStyles = makeStyles({
-  root: {
-    padding: 1.2,
-  },
-  avatar: {
-    backgroundColor: (course) => {
-        if (course.grade === "A1") {
-            return "#57bb8a";
+const useStyles = makeStyles((theme) => ({
+    root: {
+        padding: 1.2,
+    },
+    card: {
+        border: (course) => {
+            return `1px solid ${GradingScaleService.getColor(course.grade)}`;
         }
-        if (course.grade === "A2") {
-            return "#57bb8a";
+    },
+    avatar: {
+        backgroundColor: (course) => {
+            return GradingScaleService.getColor(course.grade);
         }
-        if (course.grade === "A3") {
-            return "#57bb8a";
-        } 
-        if (course.grade === "B1") {
-            return "#9ace6a";
-        }
-        if (course.grade === "B2") {
-            return "#9ace6a";
-        }
-        if (course.grade === "B3") {
-          return "#9ace6a";
-        }
-        if (course.grade === "C1") {
-          return "#ffcf02";
-        }
-        if (course.grade === "C2") {
-            return "#ffcf02";
-        }
-        if (course.grade === "C3") {
-          return "#ffcf02";
-        }
-        if (course.grade === "D") {
-          return "#ff9f02";
-      }
-      if (course.grade === "F2") {
-        return "#ff6f31";
-      }
-      if (course.grade === "F3") {
-        return "#ff6f31";
-      }
-        else {
-            return grey[700];
-        }
-    }
-},
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-});
+    },
+    bullet: {
+        display: 'inline-block',
+        margin: '0 2px',
+        transform: 'scale(0.8)',
+    },
+    title: {
+        fontSize: 14,
+    },
+    pos: {
+        marginBottom: 12,
+    },
+    creditTypography: {
+        marginLeft: theme.spacing(1),
+        color: theme.palette.primary.main,
+    },
+}));
 
-export default function CourseCard({termIdx, courseIdx, course, handleDelete}) {
-  const classes = useStyles(course);
-  return (
-    <div>
-        <Card  variant={"outlined"} >
-            <CardHeader
-                avatar ={
-                    <Avatar className={classes.avatar}>
-                        {course.grade}
-                    </Avatar>
-                }
-                action ={
-                    <IconButton onClick={() => handleDelete(termIdx, courseIdx, course)}>
-                        <DeleteOutlined/>
-                    </IconButton>
-                }
-                title={course.code}
-                subheader={course.name +  " " + course.credit}
-            />
-        </Card>
-    </div>
-  );
+
+export default function CourseCard({ termIdx, courseIdx, course, handleDelete }) {
+    const classes = useStyles(course);
+    return (
+        <div>
+            <Card variant={"outlined"} className={classes.card}>
+                <CardHeader
+                    avatar={
+                        <Avatar className={classes.avatar}>
+                            {course.grade}
+                        </Avatar>
+                    }
+                    action={
+                        <IconButton onClick={() => handleDelete(termIdx, courseIdx, course)}>
+                            <DeleteOutlined />
+                        </IconButton>
+                    }
+                    title={course.code}
+                    subheader={
+                        <Box flex="column">
+                            <Typography variant="caption">{course.name}</Typography>
+                            <Typography className={classes.creditTypography} variant="caption">{course.credit}</Typography>
+                        </Box>
+                    }
+                />
+            </Card>
+        </div>
+    );
 }

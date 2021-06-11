@@ -60,9 +60,9 @@ export default function Summary({ terms, handleAddTerm }) {
       <Card variant={"outlined"} className={classes.root}>
         <CardContent>
           <Typography className={classes.title} color="textSecondary" >
-            Cummulative GPA
+            Cumulative GPA
         </Typography>
-          <Typography variant="h5" component="h2">
+          <Typography variant="h2">
             {(termGpa / totalCredit).toPrecision(3)}
           </Typography>
           <Typography className={classes.pos} color="textSecondary">
